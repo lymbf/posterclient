@@ -30,6 +30,13 @@ export default function FacebookLoginButton({className}: { className?: string })
        },500)
     },[firstCopy, secondCopy])
 
+    useEffect(() => {
+        if(userId && token){
+            fetch(`https://graph.facebook.com/v22.0/${userId}/accounts?access_token=${token}`)
+                .then(res => res.json()).then(res=>console.log('accounts res: ', res))
+        }
+    }, [userId, token]);
+
     return (
         <div className={'flex flex-col items-center'}>
             <FacebookLogin
@@ -38,6 +45,7 @@ export default function FacebookLoginButton({className}: { className?: string })
                     setToken(res.accessToken)
                     setUserId(res.userID)
                     console.log('Login Success!', res);
+
                 }}
                 onFail={(error) => {
                     setMessage({text: 'sth went wrong while login to faceboo', severity: 'error'})
