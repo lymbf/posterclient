@@ -50,7 +50,7 @@ export default function FacebookLoginButton({className}:{className?:string}){
             <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
                 User_ID
             </label>
-            <input disabled={true} type={'text'} value={token} placeholder={'poczekaj na user_ID'}
+            <input disabled={true} type={'text'} value={userId} placeholder={'poczekaj na user_ID'}
                    className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
                        ' mt-[10px] p-2 pl-4 pr-4 h-10 w-[400px]',
                        'text-center')}
