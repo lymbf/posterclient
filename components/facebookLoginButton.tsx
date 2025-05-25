@@ -2,7 +2,7 @@
 
 import {cn} from "@/lib/utils";
 import FacebookLogin, {SuccessResponse} from "@greatsumini/react-facebook-login";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CopyIcon from "@/components/ui/copyIcon";
 import SuccessIcon from "@/components/ui/successIcon";
 
@@ -22,6 +22,14 @@ export default function FacebookLoginButton({className}: { className?: string })
     const handleSuccess = (res: SuccessResponse) => {
 
     }
+
+    useEffect(()=>{
+       setTimeout(()=>{
+           if(firstCopy)setFirstCopy(false)
+           if(secondCopy)setSecondCopy(false)
+       },500)
+    },[firstCopy, secondCopy])
+
     return (
         <div className={'flex flex-col items-center'}>
             <FacebookLogin
@@ -50,7 +58,7 @@ export default function FacebookLoginButton({className}: { className?: string })
             <div className={'relative flex justify-center items-center'}>
                 <input disabled={true} type={'text'} value={token} placeholder={'poczekaj na token'}
                        className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                           ' mt-[10px] p-2 pl-4 pr-4 h-10 m-0 w-[400px]',
+                           ' mt-[10px] p-2 pl-4 pr-12 h-10 m-0 w-[400px]',
                            'text-center')}
                 />
                 {token && !firstCopy &&  <CopyIcon
@@ -71,7 +79,7 @@ export default function FacebookLoginButton({className}: { className?: string })
             <div className={'relative flex justify-center items-center'}>
                 <input disabled={true} type={'text'} value={userId} placeholder={'poczekaj na user_ID'}
                        className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                           ' mt-[10px] p-2 pl-4 pr-4 h-10 w-[400px] m-0',
+                           ' mt-[10px] p-2 pl-4 pr-12 h-10 w-[400px] m-0',
                            'text-center')}
                 />
                 {userId && !secondCopy && <CopyIcon
@@ -83,7 +91,7 @@ export default function FacebookLoginButton({className}: { className?: string })
                         })
                     }}
                 />}
-                {secondCopy && <SuccessIcon className={'w-[25px] h-[25px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
+                {secondCopy && <SuccessIcon className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
             </div>
 
         </div>
