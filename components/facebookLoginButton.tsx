@@ -3,21 +3,22 @@
 import {cn} from "@/lib/utils";
 import FacebookLogin, {SuccessResponse} from "@greatsumini/react-facebook-login";
 import {useState} from "react";
+import CopyIcon from "@/components/ui/copyIcon";
 
-interface Room{
+interface Room {
     roomID: string,
     name: string
 }
 
-export default function FacebookLoginButton({className}:{className?:string}){
-    const [message, setMessage] = useState<{text:string, severity: 'error'|'success'}>()
+export default function FacebookLoginButton({className}: { className?: string }) {
+    const [message, setMessage] = useState<{ text: string, severity: 'error' | 'success' }>()
     const [token, setToken] = useState<string>()
     const [userId, setUserId] = useState<string>()
     const [rooms, setRooms] = useState<Room[]>();
-    const handleSuccess = (res:SuccessResponse)=>{
+    const handleSuccess = (res: SuccessResponse) => {
 
     }
-    return(
+    return (
         <div className={'flex flex-col items-center'}>
             <FacebookLogin
                 appId="1601418347189530"
@@ -42,19 +43,38 @@ export default function FacebookLoginButton({className}:{className?:string}){
             <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
                 Access_token
             </label>
-            <input disabled={true} type={'text'} value={token} placeholder={'poczekaj na token'}
-                   className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                       ' mt-[10px] p-2 pl-4 pr-4 h-10 w-[400px]',
-                       'text-center')}
-            />
+            <div className={'relative flex justify-center items-center'}>
+                <input disabled={true} type={'text'} value={token} placeholder={'poczekaj na token'}
+                       className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
+                           ' mt-[10px] p-2 pl-4 pr-4 h-10 m-0 w-[400px]',
+                           'text-center')}
+                />
+                <CopyIcon
+                    className={cn('w-[25px] h-[25px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                        'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
+                    onClick = {()=>{
+                        token && navigator.clipboard.writeText(token).then(r=>{})
+                    }}
+                />
+            </div>
             <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
                 User_ID
             </label>
-            <input disabled={true} type={'text'} value={userId} placeholder={'poczekaj na user_ID'}
-                   className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                       ' mt-[10px] p-2 pl-4 pr-4 h-10 w-[400px]',
-                       'text-center')}
-            />
+            <div className={'relative flex justify-center items-center'}>
+                <input disabled={true} type={'text'} value={userId} placeholder={'poczekaj na user_ID'}
+                       className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
+                           ' mt-[10px] p-2 pl-4 pr-4 h-10 w-[400px] m-0',
+                           'text-center')}
+                />
+                <CopyIcon
+                    className={cn('w-[25px] h-[25px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                        'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
+                    onClick = {()=>{
+                       userId && navigator.clipboard.writeText(userId).then(r=>{console.log('r: ', r)})
+                    }}
+                />
+            </div>
+
         </div>
     )
 }
