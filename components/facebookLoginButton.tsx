@@ -41,10 +41,13 @@ export default function FacebookLoginButton({className}: { className?: string })
         }
     }, [userId, token]);
 
+
     return (
         <div className={'flex flex-col items-center'}>
             <FacebookLogin
                 appId="1601418347189530"
+                // @ts-ignore
+                dialogParams={{response_type: 'code'}}
                 onSuccess={(res) => {
                     setToken(res.accessToken)
                     setUserId(res.userID)
