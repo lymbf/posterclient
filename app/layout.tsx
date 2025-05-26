@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "poster_fb_client",
@@ -40,7 +41,9 @@ export default function RootLayout({
               </div>
 
               <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-
+                <Link className={'hover:cursor-pointer hover:opacity-80'} href={'/privacypolicy'}>
+                  Privacy Policy
+                </Link>
 
               </footer>
             </div>
