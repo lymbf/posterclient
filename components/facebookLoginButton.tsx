@@ -5,9 +5,10 @@ import FacebookLogin, {SuccessResponse} from "@greatsumini/react-facebook-login"
 import {useEffect, useState} from "react";
 import CopyIcon from "@/components/ui/copyIcon";
 import SuccessIcon from "@/components/ui/successIcon";
+import PageListElement from "@/components/ui/pageListElement";
 
-interface Room {
-    roomID: string,
+interface Page {
+    pageID: string,
     name: string
 }
 
@@ -17,23 +18,23 @@ export default function FacebookLoginButton({className}: { className?: string })
     const [userId, setUserId] = useState<string>()
     const [firstCopy, setFirstCopy] = useState<boolean>(false)
     const [secondCopy, setSecondCopy] = useState<boolean>(false)
+    const [pages, setPages] = useState<Page[]>([])
 
-    const [rooms, setRooms] = useState<Room[]>();
     const handleSuccess = (res: SuccessResponse) => {
 
     }
 
-    useEffect(()=>{
-       setTimeout(()=>{
-           if(firstCopy)setFirstCopy(false)
-           if(secondCopy)setSecondCopy(false)
-       },500)
-    },[firstCopy, secondCopy])
+    useEffect(() => {
+        setTimeout(() => {
+            if (firstCopy) setFirstCopy(false)
+            if (secondCopy) setSecondCopy(false)
+        }, 500)
+    }, [firstCopy, secondCopy])
 
     useEffect(() => {
-        if(userId && token){
+        if (userId && token) {
             fetch(`https://graph.facebook.com/v22.0/${userId}/accounts?access_token=${token}`)
-                .then(res => res.json()).then(res=>console.log('accounts res: ', res))
+                .then(res => res.json()).then(res => console.log('accounts res: ', res))
         }
     }, [userId, token]);
 
@@ -60,17 +61,20 @@ export default function FacebookLoginButton({className}: { className?: string })
                     )
                 }
             />
-            <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
+
+            <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-14"/>
+
+            <label className={' uppercase font-bold text-[12px] text-foreground'}>
                 Access_token
             </label>
             <div className={'relative flex justify-center items-center'}>
                 <input disabled={true} type={'text'} value={token} placeholder={'poczekaj na token'}
                        className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                           ' mt-[10px] p-2 pl-4 pr-12 h-10 m-0 w-[400px]',
-                           'text-center')}
+                           ' mt-[10px] p-2 pl-4 pr-4 h-8 m-0 w-[400px]',
+                           'text-center text-[12px]', token && 'pr-12')}
                 />
-                {token && !firstCopy &&  <CopyIcon
-                    className={cn('w-[25px] h-[25px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                {token && !firstCopy && <CopyIcon
+                    className={cn('w-[20px] h-[20px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
                         'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
                     onClick={() => {
                         token && navigator.clipboard.writeText(token).then(r => {
@@ -79,7 +83,8 @@ export default function FacebookLoginButton({className}: { className?: string })
                     }}
 
                 />}
-                {firstCopy && <SuccessIcon className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
+                {firstCopy && <SuccessIcon
+                    className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
             </div>
             <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
                 User_ID
@@ -87,11 +92,11 @@ export default function FacebookLoginButton({className}: { className?: string })
             <div className={'relative flex justify-center items-center'}>
                 <input disabled={true} type={'text'} value={userId} placeholder={'poczekaj na user_ID'}
                        className={cn('bg-muted rounded-md border-solid border-[1px] border-muted-foreground',
-                           ' mt-[10px] p-2 pl-4 pr-12 h-10 w-[400px] m-0',
-                           'text-center')}
+                           ' mt-[10px] p-2 pl-4 pr-4 h-8 w-[400px] m-0',
+                           'text-center text-[12px]', token && 'pr-12')}
                 />
                 {userId && !secondCopy && <CopyIcon
-                    className={cn('w-[25px] h-[25px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                    className={cn('w-[20px] h-[20px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
                         'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
                     onClick={() => {
                         userId && navigator.clipboard.writeText(userId).then(r => {
@@ -99,9 +104,22 @@ export default function FacebookLoginButton({className}: { className?: string })
                         })
                     }}
                 />}
-                {secondCopy && <SuccessIcon className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
+                {secondCopy && <SuccessIcon
+                    className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
             </div>
 
+            <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-14"/>
+
+            {pages.length ? <div className={'flex flex-col'}>
+                <div className={'font-bold text-[14px]'}>
+                    Wybierz 1 z pages i skopiuj ID
+                </div>
+                <div className={'flex flex-col'}>
+                    {pages.map((p, i) => {
+                        return <PageListElement name={p.name} pageId={p.pageID}/>
+                    })}
+                </div>
+            </div> : ''}
         </div>
     )
 }
