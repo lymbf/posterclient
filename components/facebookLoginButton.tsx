@@ -64,7 +64,7 @@ export default function FacebookLoginButton({className}: { className?: string })
 
             <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-14"/>
 
-            <label className={' uppercase font-bold text-[12px] text-foreground'}>
+            <label className={' uppercase font-bold text-[12px] text-foreground mb-[10px]'}>
                 Access_token
             </label>
             <div className={'relative flex justify-center items-center'}>
@@ -74,7 +74,7 @@ export default function FacebookLoginButton({className}: { className?: string })
                            'text-center text-[12px]', token && 'pr-12')}
                 />
                 {token && !firstCopy && <CopyIcon
-                    className={cn('w-[20px] h-[20px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                    className={cn('w-[15px] h-[15px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
                         'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
                     onClick={() => {
                         token && navigator.clipboard.writeText(token).then(r => {
@@ -84,9 +84,9 @@ export default function FacebookLoginButton({className}: { className?: string })
 
                 />}
                 {firstCopy && <SuccessIcon
-                    className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
+                    className={'w-[15px] h-[15px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
             </div>
-            <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground'}>
+            <label className={'mt-[40px] uppercase font-bold text-[14px] text-foreground mb-[10px]'}>
                 User_ID
             </label>
             <div className={'relative flex justify-center items-center'}>
@@ -96,7 +96,7 @@ export default function FacebookLoginButton({className}: { className?: string })
                            'text-center text-[12px]', token && 'pr-12')}
                 />
                 {userId && !secondCopy && <CopyIcon
-                    className={cn('w-[20px] h-[20px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
+                    className={cn('w-[15px] h-[15px] fill-muted-foreground absolute top-[50%] translate-y-[-50%] right-[10px]',
                         'hover:fill-foreground hover:cursor-pointer transition-all duration-200')}
                     onClick={() => {
                         userId && navigator.clipboard.writeText(userId).then(r => {
@@ -105,13 +105,13 @@ export default function FacebookLoginButton({className}: { className?: string })
                     }}
                 />}
                 {secondCopy && <SuccessIcon
-                    className={'w-[25px] h-[25px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
+                    className={'w-[15px] h-[15px] fill-green-500 absolute top-[50%] translate-y-[-50%] right-[10px]'}/>}
             </div>
 
             <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-14"/>
 
             {pages.length ? <div className={'flex flex-col'}>
-                <div className={'font-bold text-[14px]'}>
+                <div className={'font-bold text-[14px] mb-[10px]'}>
                     Wybierz 1 z pages i skopiuj ID
                 </div>
                 <div className={'flex flex-col'}>
