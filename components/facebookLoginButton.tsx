@@ -48,6 +48,7 @@ export default function FacebookLoginButton({className}: { className?: string })
                 appId="1601418347189530"
                 // @ts-ignore
                 dialogParams={{response_type: 'code'}}
+                loginOptions={{config_id: '1354443829002393'}}
                 onSuccess={(res) => {
                     setToken(res.accessToken)
                     setUserId(res.userID)
