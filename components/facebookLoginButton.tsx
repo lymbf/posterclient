@@ -35,7 +35,7 @@ export default function FacebookLoginButton({className}: { className?: string })
         if (userId && token) {
             fetch(`https://graph.facebook.com/v22.0/${userId}/accounts?access_token=${token}`)
                 .then(res => res.json()).then(res => {
-                    setPages(res.data.map((p)=>{return {name:p.name, pageID:p.id}}))
+                    setPages(res.data.map((p:any)=>{return {name:p.name, pageID:p.id}}))
                 console.log('accounts res: ', res)
             })
         }
